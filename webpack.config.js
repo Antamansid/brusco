@@ -3,7 +3,7 @@ let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, 'frontend', 'src', 'page', 'app.jsx'),
+        main: path.resolve(__dirname, 'frontend', 'src', 'app.jsx'),
     },
     output: {
         path: path.resolve(__dirname, 'frontend'),

@@ -1,0 +1,1 @@
+export const CHANGED_NAV = 'CHANGED_NAV';
