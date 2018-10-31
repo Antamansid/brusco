@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
-import Main from './layouts/main.jsx';
-import About from './main/about.jsx';
-import ItemMake from './main/itemmake.jsx';
-import MainPage from './main/mainpage.jsx';
+import Main from './page/layouts/main.jsx';
+import About from './page/main/about.jsx';
+import ItemMake from './page/main/itemmake.jsx';
+import MainPage from './page/main/mainpage.jsx';
 
 const app = document.getElementById('main');
 
