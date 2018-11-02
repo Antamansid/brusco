@@ -7,39 +7,11 @@ export default class Header extends React.Component{
     }
     render() {
         return <div>
-            {makeBest(this.props.path.pathname)}
+            <ul className="nav nav-tabs">
+                <li role="presentation" className={(this.props.path.pathname === "/") ? 'active' : null}><Link to="/">Домой</Link></li>
+                <li role="presentation" className={(this.props.path.pathname === "/itemmake") ? 'active' : null}><Link to="/itemmake">Сделать предмет</Link></li>
+                <li role="presentation" className={(this.props.path.pathname === "/about") ? 'active' : null}><Link to="/about">О нас</Link></li>
+            </ul>
         </div>;
     }
 };
-
-function makeBest(path) {
-    let data = ""
-    switch (path) {
-        case "/": {
-            data = <ul className="nav nav-tabs">
-                <li role="presentation" className="active"><Link to="/">Домой</Link></li>
-                <li role="presentation"><Link to="/itemmake">Сделать предмет</Link></li>
-                <li role="presentation"><Link to="/about">О нас</Link></li>
-            </ul>;
-            break;
-        }
-        case "/itemmake": {
-            data = <ul className="nav nav-tabs">
-                <li role="presentation"><Link to="/">Домой</Link></li>
-                <li role="presentation" className="active"><Link to="/itemmake">Сделать предмет</Link></li>
-                <li role="presentation"><Link to="/about">О нас</Link></li>
-            </ul>;
-            break;
-        }
-        case "/about": {
-            data = <ul className="nav nav-tabs">
-                <li role="presentation"><Link to="/">Домой</Link></li>
-                <li role="presentation"><Link to="/itemmake">Сделать предмет</Link></li>
-                <li role="presentation" className="active"><Link to="/about">О нас</Link></li>
-            </ul>;
-            break;
-        }
-    }
-    return data;
-
-}
