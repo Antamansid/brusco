@@ -29,5 +29,10 @@ module.exports = {
             }
         }),
 
-    ]
+    ],
+    resolve: {
+        alias: {
+            'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+        }
+    }
 };

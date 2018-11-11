@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux';
 
-import {navReducer} from './reducers/navReducer.jsx';
+import {navReducer} from '../reducers/navReducer.jsx';
 
 const reducers = combineReducers({
     navs: navReducer
