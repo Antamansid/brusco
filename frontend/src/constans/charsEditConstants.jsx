@@ -1,0 +1,1 @@
+export const ADD_CHAR_POS = 'ADD_CHAR_POS';

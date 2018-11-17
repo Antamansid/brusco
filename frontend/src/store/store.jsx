@@ -1,9 +1,12 @@
 import {createStore, combineReducers} from 'redux';
 
-import {navReducer} from '../reducers/navReducer.jsx';
+import {itemsEditReducer} from "../reducers/itemsEditReducers.jsx";
+import {charsEditReducers} from "../reducers/charsEditReducers.jsx";
+
 
 const reducers = combineReducers({
-    navs: navReducer
+    items: itemsEditReducer,
+    chars: charsEditReducers
 });
 
 const store = createStore(reducers);

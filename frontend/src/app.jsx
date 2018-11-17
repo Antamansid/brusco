@@ -14,7 +14,7 @@ import {Provider} from 'react-redux';
 const app = document.getElementById('main');
 
 ReactDOM.render(
-        <div>
+        <Provider store={store}>
             <Router history={browserHistory}>
                 <Route path="/" component={Page}>
                     <IndexRoute component={MainPage} />
@@ -22,5 +22,5 @@ ReactDOM.render(
                     <Route path="about" component={About} />
                 </Route>
             </Router>
-        </div>
+        </Provider>
     , app);
