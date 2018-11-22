@@ -10,7 +10,7 @@ export default class CharReady extends React.Component {
         }
         let chars = this.props.chars.map((data, index)=>{
              return <div key = {index}>
-                <span>{data.nameCharInput}</span>:
+                <span>{data.nameCharInput}</span><span>: </span>
                 <span>{data.countCharInput}</span>
                 <span>{data.beiCharInput}</span>
             </div>

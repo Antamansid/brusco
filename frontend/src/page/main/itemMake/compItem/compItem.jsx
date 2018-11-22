@@ -1,13 +1,23 @@
 import React from "react";
+import $ from "jquery";
+import "jquery-ui";
 
 export default class CompItem extends React.Component {
+    componentDidMount(){
+        $("#compItem").droppable({
+            accept: "div",
+            drop: function( event, ui ) {
+                ui.draggable.appendTo("#ItemMaker");
+            }
+        });
+    }
     render() {
         return <div>
                 <div id="compItem" className="ui-widget-content ui-state-default">
                     <h2 className="ui-widget-header">Скомпоновать итем</h2>
                     <div>
-                        <input data-role = "" type="text" placeholder="Наименование Итема"/>
-                        <input data-role = ""  type="text" placeholder="БЕИ"/>
+                        <input type="text" placeholder="Наименование Итема"/>
+                        <input type="text" placeholder="БЕИ"/>
                         <div id = "ItemMaker"></div>
                         <button>Создать итем</button>
                     </div>

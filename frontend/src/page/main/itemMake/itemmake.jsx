@@ -1,5 +1,4 @@
 import React from "react";
-import $ from  "jquery";
 
 import NewItem from "./newItem/newItem.jsx";
 import FindItem from "./findItem/findItem.jsx";
@@ -16,7 +15,7 @@ class ItemMake extends React.Component {
             <h1>Сделать итем</h1>
             <NewItem/>
             <CompItem/>
-            <FindItem/>
+            <FindItem items = {this.props.items}/>
         </div>;
     }
 }

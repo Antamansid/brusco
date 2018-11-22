@@ -7,6 +7,11 @@ export function charsEditReducers(state = {chars: []}, action) {
             chars.push(action.payload);
             state = {...state, chars}
             break;
+        };
+        case charsEditConstants.CLEAR_CHARS:{
+            let chars = [];
+            state = {...state, chars}
+            break;
         }
     };
     return state;

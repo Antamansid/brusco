@@ -1,6 +1,4 @@
 import React from "react";
-import $ from  "jquery";
-import "jquery-ui";
 
 import CharReady from "./charReady/charReady.jsx"
 
@@ -14,52 +12,48 @@ class NewItem extends React.Component {
         super(props);
     }
     addChar(){
-        let chars = charsEditActions.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.beiCharInput.value);
+        this.props.dispatch(charsEditActions.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.beiCharInput.value));
         this.nameCharInput.value = "";
         this.countCharInput.value = "";
         this.beiCharInput.value = "";
-        this.props.dispatch(chars);
+    }
+    addItem(){
+        let itemChars = [];
+        for (let i = 0; i < this.charsList.childNodes[0].childNodes.length; i++){
+            itemChars.push({nameChar: this.charsList.childNodes[0].childNodes[i].childNodes[0].textContent,
+                            countChar: this.charsList.childNodes[0].childNodes[i].childNodes[2].textContent,
+                            beiChar: this.charsList.childNodes[0].childNodes[i].childNodes[3].textContent})
+
+        }
+        let item = itemsEditActions.addItem({   nameItem: this.nameItemInput.value,
+                                                beiItem: this.beiItemInput.value,
+                                                charsItem: itemChars});
+        this.props.dispatch(item);
+        this.props.dispatch(charsEditActions.clearChars());
+        this.nameItemInput.value = "";
+        this.beiItemInput.value = "";
+
     }
     render() {
         return <div>
             <div id="makeItem" className="ui-widget-content ui-state-default">
                 <h2 className="ui-widget-header">Создать итем</h2>
-                <input data-role = "ItemName" type="text"/>
-                <div data-role = "Char">
-                    <input data-role = "nameChar" type="text" placeholder="Наименование характеристики" ref={(input)=>{this.nameCharInput = input}}/>
-                    <input data-role = "countChar"  type="text" placeholder="Количество" ref={(input)=>{this.countCharInput = input}}/>
-                    <input data-role = "beiChar"  type="text" placeholder="БЕИ" ref={(input)=>{this.beiCharInput = input}}/>
-                    <CharReady chars = {this.props.chars.chars}/>
+                <input type="text" placeholder="наименование итема" ref={(input)=>{this.nameItemInput = input}}/>
+                <input type="text" placeholder="БЕИ итема" ref={(input)=>{this.beiItemInput = input}}/>
+                <div>
+                    <input type="text" placeholder="Наименование характеристики" ref={(input)=>{this.nameCharInput = input}}/>
+                    <input type="text" placeholder="Количество" ref={(input)=>{this.countCharInput = input}}/>
+                    <input type="text" placeholder="БЕИ" ref={(input)=>{this.beiCharInput = input}}/>
+                    <div ref ={(elem)=>{this.charsList = elem}}>
+                        <CharReady chars = {this.props.chars.chars}/>
+                    </div>
                 </div>
                 <button onClick={this.addChar.bind(this)}>Добавить характеристику</button>
             </div>
-            <button onClick={addItem}>Создать итем</button>
+            <button onClick={this.addItem.bind(this)}>Создать итем</button>
         </div>;
     }
 }
-
-function addItem(event){
-    let newItem = document.createElement("div");
-    newItem.setAttribute("data-id", "id1");
-    $(newItem).append(`<h3>${$('[data-role = "ItemName"]').val()}</h3>`);
-    $(newItem).append(`<div>${$('[data-role = "CharReady"]').html()}</div>`);
-    $(newItem).draggable({
-        revert: "invalid",
-        containment: "document",
-        helper: "clone",
-        cursor: "move"
-    });
-    $("#compItem").droppable({
-        accept: "div",
-        drop: function( event, ui ) {
-            ui.draggable.appendTo("#ItemMaker");
-        }
-    });
-    $(newItem).appendTo("#findItem");
-    $("#makeItem").children('[data-role = "ItemName"]').val("");
-    $("#makeItem").children('[data-role = "Char"]').children('[data-role = "CharReady"]').html("");
-}
-
 
 function mapStateToProps(store) {
     return {

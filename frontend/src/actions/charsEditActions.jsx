@@ -7,5 +7,10 @@ export default class charsEditActions{
             type: charsEditConstants.ADD_CHAR_POS,
             payload: newChar
         }
+    };
+    static clearChars(){
+        return{
+            type: charsEditConstants.CLEAR_CHARS
+        }
     }
 }
