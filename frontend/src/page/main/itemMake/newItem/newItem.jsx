@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 
 import CharReady from "./charReady/charReady.jsx"
-import Consoles from "./Consoles/consoles.jsx"
+import Consoles from "./consoles/consoles.jsx"
 
 import itemsEditActions from "../../../../actions/itemsEditActions.jsx";
 import charsEditActions from "../../../../actions/charsEditActions.jsx";
