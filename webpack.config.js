@@ -8,9 +8,16 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'frontend'),
         filename: 'bundle.js',
+        sourceMapFilename: "bundle.js.map"
     },
     module: {
         rules: [
+            {
+              test: /\.js$/,
+              exclude: /node_modules/,
+              use: ["source-map-loader"],
+              enforce: "pre"
+            },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,

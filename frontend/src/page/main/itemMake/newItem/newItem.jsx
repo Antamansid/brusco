@@ -2,12 +2,10 @@ import React from "react";
 import ReactDOM from 'react-dom';
 
 import CharReady from "./charReady/charReady.jsx"
-import Consoles from "./consoles/consoles.jsx"
+import Chars from "./chars/chars.jsx"
 
 import itemsEditActions from "../../../../actions/itemsEditActions.jsx";
 import charsEditActions from "../../../../actions/charsEditActions.jsx";
-import beiEditActions from "../../../../actions/beiEditActions.jsx";
-import consolesEditActions from "../../../../actions/consolesEditActions.jsx";
 import store from "../../../../store/store.jsx";
 import {connect} from "react-redux";
 
@@ -15,12 +13,6 @@ import {connect} from "react-redux";
 class NewItem extends React.Component {
     constructor(props){
         super(props);
-    }
-    addChar(){
-
-        //диспатчим новый чар
-        //Передаем объекты, чтобы в экшне все валуе задавались
-        this.props.dispatch(charsEditActions.addCharPos(this.nameCharInput, this.countCharInput, this.charsConsoles));
     }
     addItem(){
         //Создаем итем
@@ -30,39 +22,14 @@ class NewItem extends React.Component {
 
     }
     render() {
-        return <div>
-            <div id="makeItem" className="ui-widget-content ui-state-default">
-                <h2 className="ui-widget-header">Создать вещь</h2>
-                <input type="text" placeholder="наименование итема" ref={(input)=>{this.nameItemInput = input}}/>
-                <input type="text" placeholder="БЕИ итема" ref={(input)=>{this.beiItemInput = input}}/>
-                <div>
-                    <input type="text" placeholder="Наименование характеристики" ref={(input)=>{this.nameCharInput = input}}/>
-                    <input type="text" placeholder="Количество" ref={(input)=>{this.countCharInput = input}}/>
-                    <Consoles consoles = {this.props.consoles.consoles} designation = {this.props.chars.designation}
-                              ref ={(node) =>{this.charsConsoles = ReactDOM.findDOMNode(node)}}/>
+        return  <div id="makeItem" className="ui-widget-content ui-state-default">
+                    <h2 className="ui-widget-header">Создать вещь</h2>
+                    <input type="text" placeholder="наименование итема" ref={(input)=>{this.nameItemInput = input}}/>
+                    <input type="text" placeholder="БЕИ итема" ref={(input)=>{this.beiItemInput = input}}/>
+                    <Chars/>
                     <CharReady chars = {this.props.chars.chars} ref ={(node)=>{this.charsList = ReactDOM.findDOMNode(node)}}/>
-                </div>
-                <button onClick={this.addChar.bind(this)}>Добавить характеристику</button>
-            </div>
-            <button onClick={this.addItem.bind(this)}>Создать итем</button>
-        </div>;
-    }
-    componentDidMount(){
-        this.props.dispatch(beiEditActions.getBei()).then(()=>{
-            this.props.dispatch(consolesEditActions.getConsoles()).then(()=>{
-                $(this.nameCharInput).autocomplete(
-                    {
-                        source: this.props.bei.bei.magnitude,
-                        select: (event, ui)=>{
-                            if(this.props.bei.bei.magnitude){
-                                let ind = this.props.bei.bei.magnitude.indexOf(ui.item.value);
-                                this.props.dispatch(charsEditActions.getConsolesFromChar(this.props.bei.bei.designation[ind]));
-                            }
-                        }
-                    }
-                );
-            });
-        });
+                    <button onClick={this.addItem.bind(this)}>Создать итем</button>
+                </div>;
     }
 }
 
