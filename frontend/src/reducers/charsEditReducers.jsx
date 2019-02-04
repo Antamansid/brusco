@@ -9,8 +9,10 @@ export function charsEditReducers(state = {chars: []}, action) {
             state = {...state, chars, designation}
             break;
         };
+        //Отлавливаем Экшн по типу
         case charsEditConstants.CLEAR_CHARS:{
             let chars = [];
+            //Чистим стэйт
             state = {...state, chars}
             break;
         };

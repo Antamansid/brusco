@@ -15,11 +15,14 @@ class NewItem extends React.Component {
         super(props);
     }
     addItem(){
-        //Создаем итем
-        this.props.dispatch(itemsEditActions.addItem(this.charsList, this.nameItemInput, this.beiItemInput));
-        //Чистим характеристики
+        //Диспатчим экшн Добавить итем
+        this.props.dispatch(itemsEditActions.addItem(this.props.chars.chars, this.nameItemInput.value, this.beiItemInput.value));
+        //Диспатчим Экшн "Очистить поля характеристик"
         this.props.dispatch(charsEditActions.clearChars());
-
+        //Очистить поле имени Итема
+        this.nameItemInput.value = "";
+        //Очистить поле БЕИ итема
+        this.beiItemInput.value = "";
     }
     render() {
         return  <div id="makeItem" className="ui-widget-content ui-state-default">

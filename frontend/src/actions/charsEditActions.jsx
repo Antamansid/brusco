@@ -4,9 +4,9 @@ import * as Settings from '../settings.jsx'
 export default class charsEditActions{
     static addCharPos(nameCharInput, countCharInput, beiCharInput){
         let newChar = {
-            nameCharInput : nameCharInput.value,
-            countCharInput: countCharInput.value,
-            beiCharInput: beiCharInput.value
+            nameChar : nameCharInput.value,
+            countChar: countCharInput.value,
+            beiChar: beiCharInput.value
         };
         nameCharInput.value = "";
         countCharInput.value = "";
@@ -16,9 +16,12 @@ export default class charsEditActions{
         }
     };
     static clearChars(){
-        return{
+        //Делаем объект экшн из Тип экшна: константа пэйлоад не нужен
+        let action = {
             type: charsEditConstants.CLEAR_CHARS
         }
+        //Возвращаем экшн
+        return action;
     };
     static getConsolesFromChar(designation){
         return{

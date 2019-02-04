@@ -2,23 +2,19 @@ import * as ItemsEditConstants from '../constans/itemsEditConstants.jsx';
 
 export default class ItemsEditActions{
     static addItem(charsList, nameItemInput, beiItemInput){
-        let itemChars = [];
-        for (let i = 0; i < charsList.childNodes.length; i++){
-            itemChars.push({nameChar: charsList.childNodes[i].childNodes[0].textContent,
-                countChar: charsList.childNodes[i].childNodes[2].textContent,
-                beiChar: charsList.childNodes[i].childNodes[3].textContent})
-
-        }
+        //Принимаем Список характеристик, наименование итема, БЕИ итема
+        //Делаем объект из Наименования, Беи и Массив характеристик
         let item = {
-            nameItem: nameItemInput.value,
-            beiItem: beiItemInput.value,
-            charsItem: itemChars
+            nameItem: nameItemInput,
+            beiItem: beiItemInput,
+            charsItem: charsList
         };
-        nameItemInput.value = "";
-        beiItemInput.value = "";
-        return{
+        //Делаем объект экшн из Тип экшна: константа, Пэйлоад: итем
+        let action = {
             type: ItemsEditConstants.ADD_ITEM,
             payload: item
-        }
+        };
+        //Возвращаем экшн
+        return action;
     }
 }
