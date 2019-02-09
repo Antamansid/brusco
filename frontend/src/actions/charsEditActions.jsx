@@ -1,19 +1,23 @@
 import * as charsEditConstants from '../constans/charsEditConstants.jsx';
-import * as Settings from '../settings.jsx'
 
 export default class charsEditActions{
-    static addCharPos(nameCharInput, countCharInput, beiCharInput){
+    static addCharPos(nameChar, countChar, beiChar){
+        //Ввод Имя характеристики
+        //Ввод Количества
+        //Ввод БЕИ
+        //Делаем объект из Имени характеристики Количества БЕИ
         let newChar = {
-            nameChar : nameCharInput.value,
-            countChar: countCharInput.value,
-            beiChar: beiCharInput.value
+            nameChar,
+            countChar,
+            beiChar
         };
-        nameCharInput.value = "";
-        countCharInput.value = "";
-        return{
+        //Делаем объект экшн из Тип экшна: константа Пэйлоад: объект характеристики
+        let action = {
             type: charsEditConstants.ADD_CHAR_POS,
             payload: newChar
-        }
+        };
+        //Возвращаем экшн
+        return action;
     };
     static clearChars(){
         //Делаем объект экшн из Тип экшна: константа пэйлоад не нужен
@@ -22,11 +26,5 @@ export default class charsEditActions{
         }
         //Возвращаем экшн
         return action;
-    };
-    static getConsolesFromChar(designation){
-        return{
-            type: charsEditConstants.GET_CONSOLES_CHAR,
-            payload: designation
-        }
     };
 }

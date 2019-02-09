@@ -6,6 +6,7 @@ import {itemsEditReducer} from "../reducers/itemsEditReducers.jsx";
 import {charsEditReducers} from "../reducers/charsEditReducers.jsx";
 import {beiEditReducers} from "../reducers/beiEditReducers.jsx";
 import {consolesEditReducers} from "../reducers/consolesEditReducers.jsx";
+import {designationEditReducers} from "../reducers/designationEditReducers.jsx";
 
 //Импорт мидлвар
 //Логер в консоль браузера
@@ -21,7 +22,8 @@ const reducers = combineReducers({
     items: itemsEditReducer,
     chars: charsEditReducers,
     bei: beiEditReducers,
-    consoles: consolesEditReducers
+    consoles: consolesEditReducers,
+    designation: designationEditReducers
 });
 
 //Создаем стор из редюсеров и мидлвара
