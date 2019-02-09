@@ -12,10 +12,15 @@ class DB {
     }
     getChars(){
         return new Promise((resolve, reject)=>{
+            //Создаем пустой массив
             let data = [];
+            //Гетим СИ характеристики
             this.getCharsSi().then((siResult)=>{
+                //Гетим неСИ Характеристики
                 this.getCharsNoSi().then((noSiResult)=>{
+                    //Конкатим в пустой массив полученные результаты
                     data = siResult.concat(noSiResult);
+                    //Ресолвим массив
                     resolve(data);
                 })
             })
@@ -23,11 +28,14 @@ class DB {
     }
     getCharsSi(){
         return new Promise((resolve, reject)=>{
+            //Создаем новый пул
             this.pool.getConnection((err, connection)=>{
                 if(err) throw err;
+                //Селектим все СИ Характеристики
                 connection.query('Select * from si', (error, results, fields)=>{
                     connection.release();
                     if(error) throw error;
+                    //Ресолвим результат
                     resolve(results);
                 })
             })
@@ -35,11 +43,14 @@ class DB {
     }
     getCharsNoSi(){
         return new Promise((resolve, reject)=>{
+            //Создаем новый пул
             this.pool.getConnection((err, connection)=>{
                 if(err) throw err;
+                //Селектим все неСИ Характеристики
                 connection.query('Select * from nosi', (error, results, fields)=>{
                     connection.release();
                     if(error) throw error;
+                    //Ресолвим результат
                     resolve(results);
                 })
             })
@@ -47,11 +58,14 @@ class DB {
     }
     getConsoles(){
         return new Promise((resolve, reject)=>{
+            //Создаем новый пул
             this.pool.getConnection((err, connection)=>{
                 if(err) throw err;
+                //Селектим все Приставки
                 connection.query('Select * from consolessi', (error, results, fields)=>{
                     connection.release();
                     if(error) throw error;
+                    //Ресолвим результат
                     resolve(results);
                 })
             })
