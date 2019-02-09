@@ -2,7 +2,11 @@ import React from "react";
 import $ from  "jquery";
 import "jquery-ui";
 
-export default class FindItem extends React.Component {
+import store from "../../../../store/store.jsx";
+import {connect} from "react-redux";
+
+
+class FindItem extends React.Component {
     constructor(props){
         super(props);
         this.itemsList = [];
@@ -41,3 +45,11 @@ export default class FindItem extends React.Component {
             </div>;
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        items: store.items
+    }
+}
+
+export default connect(mapStateToProps)(FindItem);

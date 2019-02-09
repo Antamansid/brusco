@@ -6,8 +6,9 @@ import Chars from "./chars/chars.jsx"
 
 import itemsEditActions from "../../../../actions/itemsEditActions.jsx";
 import charsEditActions from "../../../../actions/charsEditActions.jsx";
-import store from "../../../../store/store.jsx";
+
 import {connect} from "react-redux";
+import store from "../../../../store/store.jsx";
 
 
 class NewItem extends React.Component {
@@ -16,7 +17,7 @@ class NewItem extends React.Component {
     }
     addItem(){
         //Диспатчим экшн Добавить итем
-        this.props.dispatch(itemsEditActions.addItem(this.props.chars.chars, this.nameItemInput.value, this.beiItemInput.value));
+        this.props.dispatch(itemsEditActions.addItem(this.props.chars, this.nameItemInput.value, this.beiItemInput.value));
         //Диспатчим Экшн "Очистить поля характеристик"
         this.props.dispatch(charsEditActions.clearChars());
         //Очистить поле имени Итема
@@ -30,7 +31,7 @@ class NewItem extends React.Component {
                     <input type="text" placeholder="наименование итема" ref={(input)=>{this.nameItemInput = input}}/>
                     <input type="text" placeholder="БЕИ итема" ref={(input)=>{this.beiItemInput = input}}/>
                     <Chars/>
-                    <CharReady chars = {this.props.chars.chars} ref ={(node)=>{this.charsList = ReactDOM.findDOMNode(node)}}/>
+                    <CharReady/>
                     <button onClick={this.addItem.bind(this)}>Создать итем</button>
                 </div>;
     }
@@ -38,10 +39,7 @@ class NewItem extends React.Component {
 
 function mapStateToProps(store) {
     return {
-        items: store.items,
-        chars: store.chars,
-        bei: store.bei,
-        consoles: store.consoles
+        chars: store.chars
     }
 }
 

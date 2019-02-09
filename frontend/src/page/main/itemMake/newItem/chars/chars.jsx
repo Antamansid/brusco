@@ -24,7 +24,7 @@ class Chars extends React.Component {
         //Очистить поле количества Характеристики
         this.countCharInput.value = "";
         //Очистить поле БЕИ  характеристики
-        this.charsConsoles.value = "";
+        //this.charsConsoles.value = "";
 
     }
     fillUp(){
@@ -63,8 +63,7 @@ class Chars extends React.Component {
         return  <div>
                     <input type="text" placeholder="Наименование характеристики" ref={(input)=>{this.nameCharInput = input}}/>
                     <input type="text" placeholder="Количество" ref={(input)=>{this.countCharInput = input}}/>
-                    <Consoles consoles = {this.props.consoles} designation = {this.props.designation}
-                        ref ={(node) =>{this.charsConsoles = ReactDOM.findDOMNode(node)}}/>
+                    <Consoles ref ={(node) =>{this.charsConsoles = ReactDOM.findDOMNode(node)}}/>
                     <button onClick={this.addChar.bind(this)}>Добавить характеристику</button>
                 </div>
         ;
@@ -76,10 +75,7 @@ class Chars extends React.Component {
 
 function mapStateToProps(store) {
     return {
-        bei: store.bei,
-        chars: store.chars,
-        consoles: store.consoles,
-        designation: store.designation
+        bei: store.bei
     }
 }
 
