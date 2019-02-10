@@ -1,6 +1,6 @@
 import React from "react";
 import $ from "jquery";
-import "jquery-ui";
+import "jquery-ui/ui/widgets/droppable";
 
 export default class CompItem extends React.Component {
     componentDidMount(){
