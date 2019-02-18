@@ -23,12 +23,12 @@ class FindItem extends React.Component {
     }
     render() {
         let items = ""
-        if(this.props.items.length){
-            items = this.props.items.map((data, index)=>{
+        if(this.props.items.items.length){
+            items = this.props.items.items.map((data, index)=>{
                 let chars = data.charsItem.map((char, index)=>{
                     return <div><span>{char.nameChar}</span><span>: </span><span>{char.countChar}</span><span>{char.beiChar}</span></div>
                 })
-                return <div ref={(div)=>{this.itemsList[index] = div}}>
+                return <div key = {index} ref={(div)=>{this.itemsList[index] = div}}>
                     <h3>{data.nameItem}</h3>
                     <h4>{data.beiItemInput}</h4>
                     {chars}

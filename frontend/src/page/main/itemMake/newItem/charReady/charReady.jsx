@@ -9,10 +9,10 @@ class CharReady extends React.Component {
     }
     render() {
         console.log(this.props);
-        if(!this.props.chars.length){
+        if(!this.props.chars.chars.length){
             return <div><p>Добавьте характеристику</p></div>
         };
-        let chars = this.props.chars.map((data, index)=>{
+        let chars = this.props.chars.chars.map((data, index)=>{
              return <div key = {index}>
                 <span>{data.nameChar}</span><span>: </span>
                 <span>{data.countChar}</span>

@@ -17,7 +17,7 @@ class NewItem extends React.Component {
     }
     addItem(){
         //Диспатчим экшн Добавить итем
-        this.props.dispatch(itemsEditActions.addItem(this.props.chars, this.nameItemInput.value, this.beiItemInput.value));
+        this.props.dispatch(itemsEditActions.addItem(this.props.chars.chars, this.nameItemInput.value, this.beiItemInput.value));
         //Диспатчим Экшн "Очистить поля характеристик"
         this.props.dispatch(charsEditActions.clearChars());
         //Очистить поле имени Итема

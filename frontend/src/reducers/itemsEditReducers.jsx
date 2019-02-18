@@ -1,13 +1,14 @@
 import * as ItemsEditConstants from '../constans/itemsEditConstants.jsx';
 
-export function itemsEditReducer(state = [], action) {
+export function itemsEditReducer(state = {items : []}, action) {
     console.log(action);
     switch (action.type){
         //отлавливаем Экшн по типу
         case ItemsEditConstants.ADD_ITEM:{
-            console.log(action)
             //Пушим в стэйт новый итем
-            state.push(action.payload);
+            let items = state.items;
+            items.push(action.payload);
+            state = {...state, items};
             break;
         }
     };
