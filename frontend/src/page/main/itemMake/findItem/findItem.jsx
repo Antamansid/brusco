@@ -26,7 +26,7 @@ class FindItem extends React.Component {
         if(this.props.items.items.length){
             items = this.props.items.items.map((data, index)=>{
                 let chars = data.charsItem.map((char, index)=>{
-                    return <div><span>{char.nameChar}</span><span>: </span><span>{char.countChar}</span><span>{char.beiChar}</span></div>
+                    return <div key = {index}><span>{char.nameChar}</span><span>: </span><span>{char.countChar}</span><span>{char.beiChar}</span></div>
                 })
                 return <div key = {index} ref={(div)=>{this.itemsList[index] = div}}>
                     <h3>{data.nameItem}</h3>

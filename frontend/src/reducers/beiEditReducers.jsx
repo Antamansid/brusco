@@ -1,6 +1,6 @@
 import * as beiEditConstants from '../constans/beiEditConstants.jsx';
 
-export function beiEditReducers(state = {}, action) {
+export function beiEditReducers(state = {bei:{}}, action) {
     switch (action.type){
         //Отлавливаем Экшн по типу
         case beiEditConstants.GET_BEI_FULFILLED:{
@@ -24,7 +24,7 @@ export function beiEditReducers(state = {}, action) {
                     designation: designation
                 }
             //Приравниваем стейт к полученному объекту
-            state = newRes;
+            state = {...state, bei: newRes}
             break;
         }
     };

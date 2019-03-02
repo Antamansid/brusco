@@ -41,16 +41,16 @@ class Chars extends React.Component {
                 $(this.nameCharInput).autocomplete(
                     {
                         //Источник указываем полученный массив из комплекта характеристик
-                        source: this.props.bei.magnitude,
+                        source: this.props.bei.bei.magnitude,
                         //При выборе характеристики бросаем эвент
                         select: (event, ui)=>{
                             //Если вcе ок
-                            if(this.props.bei.magnitude){
+                            if(this.props.bei.bei.magnitude){
                                 //Получаем индекс из массива выбранного пользователем Характеристики
-                                let ind = this.props.bei.magnitude.indexOf(ui.item.value);
+                                let ind = this.props.bei.bei.magnitude.indexOf(ui.item.value);
                                 //Теперь надо единицу измерения определить. Создаем переменную в которую пихаем экшн с выбранной характеристикой. 
                                 //В этот экшн передаем обозначение выбранной характеристики
-                                let desig = designationEditActions.getConsolesFromChar(this.props.bei.designation[ind]);
+                                let desig = designationEditActions.getConsolesFromChar(this.props.bei.bei.designation[ind]);
                                 //Диспатчим эту переменную
                                 this.props.dispatch(desig);
                             }

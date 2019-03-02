@@ -1,6 +1,6 @@
 import * as consolesEditConstants from '../constans/consolesEditConstants.jsx';
 
-export function consolesEditReducers(state = {}, action) {
+export function consolesEditReducers(state = {consoles:{}}, action) {
     switch (action.type){
         //Отлавливаем экшн по типу
         case consolesEditConstants.GET_CONSOLES_FULFILLED:{
@@ -25,7 +25,7 @@ export function consolesEditReducers(state = {}, action) {
                     designation: designation
             };
             //Приравниваем Стэйт к полученному объекту с массивами
-            state = newRes;
+            state = {...state, consoles: newRes};
             break;
         }
     };

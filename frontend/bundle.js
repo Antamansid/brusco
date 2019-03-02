@@ -850,7 +850,7 @@ var FindItem = function (_React$Component) {
                     var chars = data.charsItem.map(function (char, index) {
                         return _react2.default.createElement(
                             "div",
-                            null,
+                            { key: index },
                             _react2.default.createElement(
                                 "span",
                                 null,
@@ -875,7 +875,7 @@ var FindItem = function (_React$Component) {
                     });
                     return _react2.default.createElement(
                         "div",
-                        { ref: function ref(div) {
+                        { key: index, ref: function ref(div) {
                                 _this2.itemsList[index] = div;
                             } },
                         _react2.default.createElement(
@@ -1201,16 +1201,17 @@ var Chars = function (_React$Component) {
                     //Вешаем с помощью jquery автокомплект на инпут
                     $(_this2.nameCharInput).autocomplete({
                         //Источник указываем полученный массив из комплекта характеристик
-                        source: _this2.props.bei.magnitude,
+                        source: _this2.props.bei.bei.magnitude,
                         //При выборе характеристики бросаем эвент
                         select: function select(event, ui) {
+                            console.log("selected epta");
                             //Если вcе ок
-                            if (_this2.props.bei.magnitude) {
+                            if (_this2.props.bei.bei.magnitude) {
                                 //Получаем индекс из массива выбранного пользователем Характеристики
-                                var ind = _this2.props.bei.magnitude.indexOf(ui.item.value);
+                                var ind = _this2.props.bei.bei.magnitude.indexOf(ui.item.value);
                                 //Теперь надо единицу измерения определить. Создаем переменную в которую пихаем экшн с выбранной характеристикой. 
                                 //В этот экшн передаем обозначение выбранной характеристики
-                                var desig = _designationEditActions2.default.getConsolesFromChar(_this2.props.bei.designation[ind]);
+                                var desig = _designationEditActions2.default.getConsolesFromChar(_this2.props.bei.bei.designation[ind]);
                                 //Диспатчим эту переменную
                                 _this2.props.dispatch(desig);
                             }
@@ -1312,7 +1313,7 @@ var Consoles = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            if (!this.props.consoles.consoles || !this.props.designation.designation) {
+            if (!this.props.consoles.consoles.consoles || !this.props.designation.designation) {
                 return _react2.default.createElement(
                     "select",
                     null,
@@ -1323,22 +1324,22 @@ var Consoles = function (_React$Component) {
                     )
                 );
             }
-            var consoles = this.props.consoles.designation.map(function (data, index) {
+            var consoles = this.props.consoles.consoles.designation.map(function (data, index) {
                 return _react2.default.createElement(
                     "option",
-                    { value: "" + data + _this2.props.designation },
+                    { key: index, value: "" + data + _this2.props.designation.designation },
                     data,
-                    _this2.props.designation
+                    _this2.props.designation.designation
                 );
             });
             consoles.push(_react2.default.createElement(
                 "option",
-                { value: this.props.designation.designation, selected: true },
+                { key: consoles.lenght + 1, value: this.props.designation.designation },
                 this.props.designation.designation
             ));
             return _react2.default.createElement(
                 "select",
-                null,
+                { value: "" + this.props.designation.designation },
                 consoles
             );
         }
@@ -1608,6 +1609,9 @@ exports.default = Main;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.beiEditReducers = beiEditReducers;
 
 var _beiEditConstants = __webpack_require__(/*! ../constans/beiEditConstants.jsx */ "../../frontend/src/constans/beiEditConstants.jsx");
@@ -1617,7 +1621,7 @@ var beiEditConstants = _interopRequireWildcard(_beiEditConstants);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function beiEditReducers() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { bei: {} };
     var action = arguments[1];
 
     switch (action.type) {
@@ -1643,7 +1647,7 @@ function beiEditReducers() {
                     name: name,
                     designation: designation
                     //Приравниваем стейт к полученному объекту
-                };state = newRes;
+                };state = _extends({}, state, { bei: newRes });
                 break;
             }
     };
@@ -1717,6 +1721,9 @@ function charsEditReducers() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.consolesEditReducers = consolesEditReducers;
 
 var _consolesEditConstants = __webpack_require__(/*! ../constans/consolesEditConstants.jsx */ "../../frontend/src/constans/consolesEditConstants.jsx");
@@ -1726,7 +1733,7 @@ var consolesEditConstants = _interopRequireWildcard(_consolesEditConstants);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function consolesEditReducers() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { consoles: {} };
     var action = arguments[1];
 
     switch (action.type) {
@@ -1754,7 +1761,7 @@ function consolesEditReducers() {
                     designation: designation
                 };
                 //Приравниваем Стэйт к полученному объекту с массивами
-                state = newRes;
+                state = _extends({}, state, { consoles: newRes });
                 break;
             }
     };
@@ -1776,6 +1783,9 @@ function consolesEditReducers() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.designationEditReducers = designationEditReducers;
 
 var _designationEditConstants = __webpack_require__(/*! ../constans/designationEditConstants.jsx */ "../../frontend/src/constans/designationEditConstants.jsx");
@@ -1793,7 +1803,8 @@ function designationEditReducers() {
         case designationEditConstants.GET_CONSOLES_CHAR:
             {
                 //Приравниваем стейт к данным с пейлоад
-                state.designation = action.payload;
+                var designation = action.payload;
+                state = _extends({}, state, { designation: designation });
                 break;
             }
     };
@@ -1830,7 +1841,6 @@ function itemsEditReducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { items: [] };
     var action = arguments[1];
 
-    console.log(action);
     switch (action.type) {
         //отлавливаем Экшн по типу
         case ItemsEditConstants.ADD_ITEM:

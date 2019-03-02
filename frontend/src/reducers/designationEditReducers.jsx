@@ -5,7 +5,8 @@ export function designationEditReducers(state = {designation : ""}, action) {
         //Отлавливаем Экшн по типу
         case designationEditConstants.GET_CONSOLES_CHAR:{
             //Приравниваем стейт к данным с пейлоад
-            state.designation = action.payload;
+            let designation = action.payload;
+            state = {...state, designation};
             break;
         }
     };
