@@ -4,22 +4,35 @@ import store from "../../../../../../store/store.jsx";
 import {connect} from "react-redux";
 
 
+import "jquery-ui/ui/widgets/autocomplete";
+
+
 
 class Consoles extends React.Component {
     constructor(props){
         super(props);
     }
+    componentDidUpdate(){
+        this.fillUp();
+    }
+    fillUp(){
+        if(this.props.consoles.consoles.consoles && this.props.designation.designation){
+            let consoles = this.props.consoles.consoles.designation.map((data, index)=>{
+                return `${data}${this.props.designation.designation}`;
+            });
+            consoles.push(this.props.designation.designation);
+            $(this.consCharInput).autocomplete(
+                {
+                    source: consoles
+                }
+            );
+        }
+    }
     render() {
         if(!this.props.consoles.consoles.consoles || !this.props.designation.designation){
-            return <select><option value={"Не выбрана характеристика"}>Не выбрана характеристика</option></select>
+            return <input type="text" placeholder="В базе такой характеристики нет"/>
         }
-        let consoles = this.props.consoles.consoles.designation.map((data, index)=>{
-            return <option key = {index} value={`${data}${this.props.designation.designation}`}>{data}{this.props.designation.designation}</option>
-        });
-        consoles.push(<option key = {consoles.lenght + 1} value={this.props.designation.designation}>{this.props.designation.designation}</option>);
-        return <select value = {`${this.props.designation.designation}`}>
-            {consoles}
-        </select>;
+        return <input type="text" ref={(input)=>{this.consCharInput = input}}/>
         
     }
 }

@@ -1204,7 +1204,6 @@ var Chars = function (_React$Component) {
                         source: _this2.props.bei.bei.magnitude,
                         //При выборе характеристики бросаем эвент
                         select: function select(event, ui) {
-                            console.log("selected epta");
                             //Если вcе ок
                             if (_this2.props.bei.bei.magnitude) {
                                 //Получаем индекс из массива выбранного пользователем Характеристики
@@ -1273,7 +1272,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps)(Chars);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -1290,6 +1289,8 @@ var _store = __webpack_require__(/*! ../../../../../../store/store.jsx */ "../..
 var _store2 = _interopRequireDefault(_store);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "../react-redux/es/index.js");
+
+__webpack_require__(/*! jquery-ui/ui/widgets/autocomplete */ "../jquery-ui/ui/widgets/autocomplete.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1309,39 +1310,39 @@ var Consoles = function (_React$Component) {
     }
 
     _createClass(Consoles, [{
-        key: "render",
-        value: function render() {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            this.fillUp();
+        }
+    }, {
+        key: "fillUp",
+        value: function fillUp() {
             var _this2 = this;
 
-            if (!this.props.consoles.consoles.consoles || !this.props.designation.designation) {
-                return _react2.default.createElement(
-                    "select",
-                    null,
-                    _react2.default.createElement(
-                        "option",
-                        { value: "Не выбрана характеристика" },
-                        "\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0430"
-                    )
-                );
+            console.log("what?");
+            if (this.props.consoles.consoles.consoles && this.props.designation.designation) {
+                var consoles = this.props.consoles.consoles.designation.map(function (data, index) {
+                    return "" + data + _this2.props.designation.designation;
+                });
+                consoles.push(this.props.designation.designation);
+                console.log("what?,,,");
+                $(this.consCharInput).autocomplete({
+                    //Источник указываем полученный массив из комплекта характеристик
+                    source: consoles
+                });
             }
-            var consoles = this.props.consoles.consoles.designation.map(function (data, index) {
-                return _react2.default.createElement(
-                    "option",
-                    { key: index, value: "" + data + _this2.props.designation.designation },
-                    data,
-                    _this2.props.designation.designation
-                );
-            });
-            consoles.push(_react2.default.createElement(
-                "option",
-                { key: consoles.lenght + 1, value: this.props.designation.designation },
-                this.props.designation.designation
-            ));
-            return _react2.default.createElement(
-                "select",
-                { value: "" + this.props.designation.designation },
-                consoles
-            );
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this3 = this;
+
+            if (!this.props.consoles.consoles.consoles || !this.props.designation.designation) {
+                return _react2.default.createElement("input", { type: "text", placeholder: "\u0412 \u0431\u0430\u0437\u0435 \u0442\u0430\u043A\u043E\u0439 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u043D\u0435\u0442" });
+            }
+            return _react2.default.createElement("input", { type: "text", ref: function ref(input) {
+                    _this3.consCharInput = input;
+                } });
         }
     }]);
 
@@ -1356,6 +1357,7 @@ function mapStateToProps(store) {
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Consoles);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "../jquery/dist/jquery.js")))
 
 /***/ }),
 
