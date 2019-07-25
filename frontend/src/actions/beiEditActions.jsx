@@ -12,6 +12,15 @@ export default class beiEditActions{
             payload: data
         }
         //Возвращаем экшн
-        return result
+        return result;
     };
+    static makeNewBei(magnitude, name, designation){
+        let data = JSON.stringify({magnitude, name, designation});
+        axios.post('http://localhost/chars', data);
+        let result = {
+            type: beiEditConstants.MAKE_NEW_BEI,
+            payload: {magnitude, name, designation}
+        }
+        return result;
+    }
 }

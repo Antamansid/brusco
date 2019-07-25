@@ -26,6 +26,9 @@ export function beiEditReducers(state = {bei:{}}, action) {
             //Приравниваем стейт к полученному объекту
             state = {...state, bei: newRes}
             break;
+        };
+        case beiEditConstants.MAKE_NEW_BEI_FULFILLED:{
+
         }
     };
     return state;

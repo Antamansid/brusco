@@ -18,6 +18,11 @@ class Chars extends React.Component {
         super(props);
     }
     addChar(){
+        let trycheck = this.props.bei.bei.magnitude.indexOf(this.nameCharInput.value);
+        if(!trycheck){
+            let nameIndex = this.props.bei.bei.designation.indexOf(this.charsConsoles.value);
+
+        }
         //Диспатчим Экшн "Добавить характеристику"
         this.props.dispatch(charsEditActions.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.charsConsoles.value));
         //Очистить поле имени Характеристики
@@ -25,7 +30,7 @@ class Chars extends React.Component {
         //Очистить поле количества Характеристики
         this.countCharInput.value = "";
         //Очистить поле БЕИ  характеристики
-        //this.charsConsoles.value = "";
+        this.charsConsoles.value = "";
 
     }
     fillUp(){

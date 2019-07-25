@@ -16,8 +16,9 @@ class Consoles extends React.Component {
         this.fillUp();
     }
     fillUp(){
+        let consoles = [];
         if(this.props.consoles.consoles.consoles && this.props.designation.designation){
-            let consoles = this.props.consoles.consoles.designation.map((data, index)=>{
+            consoles = this.props.consoles.consoles.designation.map((data, index)=>{
                 return `${data}${this.props.designation.designation}`;
             });
             consoles.push(this.props.designation.designation);
@@ -26,6 +27,7 @@ class Consoles extends React.Component {
                     source: consoles
                 }
             );
+            this.consCharInput.value = consoles[consoles.length-1];
         }
     }
     render() {
