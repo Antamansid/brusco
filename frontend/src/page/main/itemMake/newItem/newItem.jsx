@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 
-import CharReady from "./charReady/charReady.jsx"
-import Chars from "./chars/chars.jsx"
+import CharReady from "./CharReady/CharReady.jsx"
+import Chars from "./Chars/Chars.jsx"
 
 import itemsEditActions from "../../../../actions/itemsEditActions.jsx";
 import charsEditActions from "../../../../actions/charsEditActions.jsx";

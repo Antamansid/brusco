@@ -1,26 +1,20 @@
+//Реакт
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-
-
-import Page from './page/page.jsx';
-import About from './page/main/about/about.jsx';
-import ItemMake from './page/main/itemMake/itemMake.jsx';
-import MainPage from './page/main/mainpage/mainpage.jsx';
-
+//Основные страницы
+import Page from './Page/Page.jsx';
+//Редакс
 import store from './store/store.jsx';
 import {Provider} from 'react-redux';
-
+//Роутер
+import {HashRouter} from 'react-router-dom';
+//Куда пихаем Реакт-приложение
 const app = document.getElementById('main');
 
 ReactDOM.render(
         <Provider store={store}>
-            <Router history={browserHistory}>
-                <Route path="/" component={Page}>
-                    <IndexRoute component={MainPage} />
-                    <Route path="itemmake" component={ItemMake} />
-                    <Route path="about" component={About} />
-                </Route>
-            </Router>
+            <HashRouter>
+                <Page/>
+            </HashRouter>            
         </Provider>
     , app);

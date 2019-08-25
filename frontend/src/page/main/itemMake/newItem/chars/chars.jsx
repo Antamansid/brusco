@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import "jquery-ui/ui/widgets/autocomplete";
 
-import Consoles from "./consoles/consoles.jsx";
+import Consoles from "./Consoles/Consoles.jsx";
 
 import charsEditActions from "../../../../../actions/charsEditActions.jsx";
 import beiEditActions from "../../../../../actions/beiEditActions.jsx";
@@ -18,10 +18,13 @@ class Chars extends React.Component {
         super(props);
     }
     addChar(){
-        let trycheck = this.props.bei.bei.magnitude.indexOf(this.nameCharInput.value);
-        if(!trycheck){
-            let nameIndex = this.props.bei.bei.designation.indexOf(this.charsConsoles.value);
-
+        //Проверяем новая ли характеристика
+        //Если новая - добавляем в базу
+        //Если не новая - ничего не делаем
+        //indexOf возвращает число от 0 и более для значения из массива, и -1 если его (значения) нет
+        if(this.props.bei.bei.magnitude.indexOf(this.nameCharInput.value)<0){
+            //диспатчим добавление характеристики в базу
+            this.props.dispatch(beiEditActions.makeNewBei(this.nameCharInput.value, this.charsConsoles.value))
         }
         //Диспатчим Экшн "Добавить характеристику"
         this.props.dispatch(charsEditActions.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.charsConsoles.value));
@@ -50,7 +53,7 @@ class Chars extends React.Component {
                         //При выборе характеристики бросаем эвент
                         select: (event, ui)=>{
                             //Если вcе ок
-                            if(this.props.bei.bei.magnitude){
+                            if(this.props.bei.bei.designation){
                                 //Получаем индекс из массива выбранного пользователем Характеристики
                                 let ind = this.props.bei.bei.magnitude.indexOf(ui.item.value);
                                 //Теперь надо единицу измерения определить. Создаем переменную в которую пихаем экшн с выбранной характеристикой. 
@@ -75,6 +78,7 @@ class Chars extends React.Component {
         ;
     }
     componentWillMount(){
+        //При загрузке страницы заполняем автокомплект 
         this.fillUp();
     }
 }

@@ -12,42 +12,11 @@ class DB {
     }
     getChars(){
         return new Promise((resolve, reject)=>{
-            //Создаем пустой массив
-            let data = [];
-            //Гетим СИ характеристики
-            this.getCharsSi().then((siResult)=>{
-                //Гетим неСИ Характеристики
-                this.getCharsNoSi().then((noSiResult)=>{
-                    //Конкатим в пустой массив полученные результаты
-                    data = siResult.concat(noSiResult);
-                    //Ресолвим массив
-                    resolve(data);
-                })
-            })
-        })
-    }
-    getCharsSi(){
-        return new Promise((resolve, reject)=>{
             //Создаем новый пул
             this.pool.getConnection((err, connection)=>{
                 if(err) throw err;
-                //Селектим все СИ Характеристики
-                connection.query('Select * from si', (error, results, fields)=>{
-                    connection.release();
-                    if(error) throw error;
-                    //Ресолвим результат
-                    resolve(results);
-                })
-            })
-        })
-    }
-    getCharsNoSi(){
-        return new Promise((resolve, reject)=>{
-            //Создаем новый пул
-            this.pool.getConnection((err, connection)=>{
-                if(err) throw err;
-                //Селектим все неСИ Характеристики
-                connection.query('Select * from nosi', (error, results, fields)=>{
+                //Селектим все Характеристики
+                connection.query('Select * from chars', (error, results, fields)=>{
                     connection.release();
                     if(error) throw error;
                     //Ресолвим результат
@@ -71,18 +40,18 @@ class DB {
             })
         })
     }
-    /*insert(data){
+    insertChar(magnitude, designation){
         return new Promise((resolve, reject)=>{
             this.pool.getConnection((err, connection)=>{
                 if(err) throw err;
-                connection.query('INSERT INTO `todolist` (`post`) VALUES(?)', data, (error, results, fields)=>{
+                connection.query(`INSERT INTO chars (magnitude, name, designation) VALUES ('${magnitude}', '${magnitude}', '${designation}')`, (error, results, fields)=>{
                     connection.release();
                     if(error) throw error;
                     resolve(results);
                 })
             })
         })
-    }
+    }/*
     update(data){
         return new Promise((resolve, reject)=>{
             this.pool.getConnection((err, connection)=>{

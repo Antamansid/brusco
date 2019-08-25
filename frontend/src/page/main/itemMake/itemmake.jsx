@@ -1,8 +1,8 @@
 import React from "react";
 
-import NewItem from "./newItem/newItem.jsx";
-import FindItem from "./findItem/findItem.jsx";
-import CompItem from "./compItem/compItem.jsx";
+import NewItem from "./NewItem/NewItem.jsx";
+import FindItem from "./FindItem/FindItem.jsx";
+import CompItem from "./CompItem/CompItem.jsx";
 
 export default class ItemMake extends React.Component {
     render() {

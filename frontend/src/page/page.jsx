@@ -1,11 +1,16 @@
 import React from 'react';
-import Header from './header/header.jsx'
 
-export default class Main extends React.Component{
+import Header from './Header/Header.jsx';
+import Main from './Main/Main.jsx';
+
+export default class Page extends React.Component{
     constructor(props){
         super(props);
     }
     render() {
-        return <div><Header path = {this.props.location}/>{this.props.children}</div>;
+        return <div>
+            <Header/>
+            <Main/>
+        </div>;
     }
 }

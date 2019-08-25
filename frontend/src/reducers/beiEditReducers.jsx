@@ -27,8 +27,18 @@ export function beiEditReducers(state = {bei:{}}, action) {
             state = {...state, bei: newRes}
             break;
         };
+        //Когда новая характеристика добавлена в базу
         case beiEditConstants.MAKE_NEW_BEI_FULFILLED:{
-
+            //забираем Базовые характеристики со стейта
+            let newBei = state.bei;
+            //Пушим название новой характеристики
+            newBei.magnitude.push(action.payload.data.magnitude);
+            //Пушим стандартное название. Приравниваем его к обычному названию
+            newBei.name.push(action.payload.data.magnitude);
+            //Пушим единицу измерения
+            newBei.designation.push(action.payload.data.designation);
+            //Обновляем стейт
+            state = {...state, bei:newBei};
         }
     };
     return state;
