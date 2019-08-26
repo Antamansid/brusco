@@ -8,17 +8,22 @@ export function beiEditReducers(state = {bei:{}}, action) {
             let magnitude = [];
             //Создаем пустой массив названий характеристик
             let name = [];
+            //Создаем пустой массив id
+            let id = [];
             //Создаем пустой массив обозначений и мапим туда данные, полученные с сервера
             let designation = action.payload.data.map((value)=>{
                 //Пушим описания в массив описаний
                 magnitude.push(value.magnitude);
                 //Пушим названия характеристик в массив с названиями
                 name.push(value.name);
+                //пушим id в массив с айди
+                id.push(value.id);
                 //Возвращаем обозначения для пушинга в массив обозначений
                 return value.designation;
             });
             //Создаем объект и в объекте указываем ссылки на полученные массивы
             let newRes = {
+                    id: id,
                     magnitude : magnitude,
                     name: name,
                     designation: designation
@@ -37,6 +42,8 @@ export function beiEditReducers(state = {bei:{}}, action) {
             newBei.name.push(action.payload.data.magnitude);
             //Пушим единицу измерения
             newBei.designation.push(action.payload.data.designation);
+            //Пушим айди
+            newBei.id.push(action.payload.data.id);
             //Обновляем стейт
             state = {...state, bei:newBei};
         }

@@ -1,13 +1,13 @@
 import * as charsEditConstants from '../constans/charsEditConstants.jsx';
 
 export default class charsEditActions{
-    static addCharPos(nameChar, countChar, beiChar){
+    static addCharPos(countChar, beiChar, idChar){
         //Ввод Имя характеристики
         //Ввод Количества
         //Ввод БЕИ
         //Делаем объект из Имени характеристики Количества БЕИ
         let newChar = {
-            nameChar,
+            idChar,
             countChar,
             beiChar
         };

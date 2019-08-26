@@ -407,7 +407,7 @@ var FindItem = function (_React$Component) {
                             _react2.default.createElement(
                                 "span",
                                 null,
-                                char.nameChar
+                                _this2.props.bei.bei.magnitude[_this2.props.bei.bei.id.indexOf(char.idChar)]
                             ),
                             _react2.default.createElement(
                                 "span",
@@ -471,7 +471,8 @@ var FindItem = function (_React$Component) {
 
 function mapStateToProps(store) {
     return {
-        items: store.items
+        items: store.items,
+        bei: store.bei
     };
 }
 
@@ -599,7 +600,8 @@ var CharReady = function (_React$Component) {
     _createClass(CharReady, [{
         key: "render",
         value: function render() {
-            console.log(this.props);
+            var _this2 = this;
+
             if (!this.props.chars.chars.length) {
                 return _react2.default.createElement(
                     "div",
@@ -618,7 +620,7 @@ var CharReady = function (_React$Component) {
                     _react2.default.createElement(
                         "span",
                         null,
-                        data.nameChar
+                        _this2.props.bei.bei.magnitude[_this2.props.bei.bei.id.indexOf(data.idChar)]
                     ),
                     _react2.default.createElement(
                         "span",
@@ -650,7 +652,8 @@ var CharReady = function (_React$Component) {
 
 function mapStateToProps(store) {
     return {
-        chars: store.chars
+        chars: store.chars,
+        bei: store.bei
     };
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(CharReady);
@@ -729,29 +732,48 @@ var Chars = function (_React$Component) {
     _createClass(Chars, [{
         key: "addChar",
         value: function addChar() {
-            //Проверяем новая ли характеристика
-            //Если новая - добавляем в базу
-            //Если не новая - ничего не делаем
-            //indexOf возвращает число от 0 и более для значения из массива, и -1 если его (значения) нет
-            if (this.props.bei.bei.magnitude.indexOf(this.nameCharInput.value) < 0) {
-                //диспатчим добавление характеристики в базу
-                this.props.dispatch(_beiEditActions2.default.makeNewBei(this.nameCharInput.value, this.charsConsoles.value));
+            var _this2 = this;
+
+            if (this.nameCharInput.value !== "" && this.countCharInput.value !== "") {
+                //Так как летит промис, исполнение кода пойдет дальше и поля формы очистятся, поэтому пихаем все в переменные
+                var nameChar = this.nameCharInput.value;
+                var countChar = this.countCharInput.value;
+                var charsConsoles = this.charsConsoles.value;
+                var idChar = -1;
+                //Получаем порядковый номер из массива характеристик
+                var idCharInMassiv = this.props.bei.bei.magnitude.indexOf(nameChar);
+                //Проверяем новая ли характеристика
+                //Если новая - добавляем в базу
+                //Если не новая - ничего не делаем
+                //indexOf возвращает число от 0 и более для значения из массива, и -1 если его (значения) нет
+                if (idCharInMassiv < 0) {
+                    //диспатчим добавление характеристики в базу
+                    this.props.dispatch(_beiEditActions2.default.makeNewBei(nameChar, charsConsoles)).then(function () {
+                        //Получаем порядковый номер из массива характеристик
+                        idCharInMassiv = _this2.props.bei.bei.magnitude.indexOf(nameChar);
+                        //Получаем айди характеристики
+                        idChar = _this2.props.bei.bei.id[idCharInMassiv];
+                        //диспатчим добавление характеристики
+                        _this2.props.dispatch(_charsEditActions2.default.addCharPos(countChar, charsConsoles, idChar));
+                    });
+                } else {
+                    //Получаем айди характеристики
+                    idChar = this.props.bei.bei.id[idCharInMassiv];
+                    //Если айди есть - просто диспатчим характеристику
+                    this.props.dispatch(_charsEditActions2.default.addCharPos(countChar, charsConsoles, idChar));
+                }
+                //Очистить поле имени Характеристики
+                this.nameCharInput.value = "";
+                //Очистить поле количества Характеристики
+                this.countCharInput.value = "";
+                //Очистить поле БЕИ  характеристики
+                this.charsConsoles.value = "";
             }
-
-            //Диспатчим Экшн "Добавить характеристику"
-            this.props.dispatch(_charsEditActions2.default.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.charsConsoles.value));
-
-            //Очистить поле имени Характеристики
-            this.nameCharInput.value = "";
-            //Очистить поле количества Характеристики
-            this.countCharInput.value = "";
-            //Очистить поле БЕИ  характеристики
-            this.charsConsoles.value = "";
         }
     }, {
         key: "fillUp",
         value: function fillUp() {
-            var _this2 = this;
+            var _this3 = this;
 
             //Создаем переменную и пихаем в нее экшн с с запросом на комплект характеристик
             var getBei = _beiEditActions2.default.getBei();
@@ -760,22 +782,22 @@ var Chars = function (_React$Component) {
                 //Создаем переменную и пихаем в нее экшн с геттера на Приставки к ЕИ
                 var getConsoles = _consolesEditActions2.default.getConsoles();
                 //Диспатчим Экшн 
-                _this2.props.dispatch(getConsoles).then(function () {
+                _this3.props.dispatch(getConsoles).then(function () {
                     //Вешаем с помощью jquery автокомплект на инпут
-                    $(_this2.nameCharInput).autocomplete({
+                    $(_this3.nameCharInput).autocomplete({
                         //Источник указываем полученный массив из комплекта характеристик
-                        source: _this2.props.bei.bei.magnitude,
+                        source: _this3.props.bei.bei.magnitude,
                         //При выборе характеристики бросаем эвент
                         select: function select(event, ui) {
                             //Если вcе ок
-                            if (_this2.props.bei.bei.designation) {
+                            if (_this3.props.bei.bei.designation) {
                                 //Получаем индекс из массива выбранного пользователем Характеристики
-                                var ind = _this2.props.bei.bei.magnitude.indexOf(ui.item.value);
+                                var ind = _this3.props.bei.bei.magnitude.indexOf(ui.item.value);
                                 //Теперь надо единицу измерения определить. Создаем переменную в которую пихаем экшн с выбранной характеристикой. 
                                 //В этот экшн передаем обозначение выбранной характеристики
-                                var desig = _designationEditActions2.default.getConsolesFromChar(_this2.props.bei.bei.designation[ind]);
+                                var desig = _designationEditActions2.default.getConsolesFromChar(_this3.props.bei.bei.designation[ind]);
                                 //Диспатчим эту переменную
-                                _this2.props.dispatch(desig);
+                                _this3.props.dispatch(desig);
                             }
                         }
                     });
@@ -785,19 +807,19 @@ var Chars = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             return _react2.default.createElement(
                 "div",
                 null,
                 _react2.default.createElement("input", { type: "text", placeholder: "\u041D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438", ref: function ref(input) {
-                        _this3.nameCharInput = input;
+                        _this4.nameCharInput = input;
                     } }),
                 _react2.default.createElement("input", { type: "text", placeholder: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E", ref: function ref(input) {
-                        _this3.countCharInput = input;
+                        _this4.countCharInput = input;
                     } }),
                 _react2.default.createElement(_Consoles2.default, { ref: function ref(node) {
-                        _this3.charsConsoles = _reactDom2.default.findDOMNode(node);
+                        _this4.charsConsoles = _reactDom2.default.findDOMNode(node);
                     } }),
                 _react2.default.createElement(
                     "button",
@@ -809,6 +831,7 @@ var Chars = function (_React$Component) {
     }, {
         key: "componentWillMount",
         value: function componentWillMount() {
+            //При загрузке страницы заполняем автокомплект 
             this.fillUp();
         }
     }]);
@@ -1301,7 +1324,7 @@ var beiEditActions = function () {
         value: function makeNewBei(magnitude, designation) {
             //Для передачи на сервер джейсоним их
             var data = { magnitude: magnitude, designation: designation };
-            //С помощью Аксиоса постим характеристики
+            //С помощью Аксиоса постим характеристики. Сервер должен вернуть объект с созданными характеристиками
             var backData = _axios2.default.post('http://localhost/chars', data);
             //Пихаем все в объект
             var result = {
@@ -1350,13 +1373,13 @@ var charsEditActions = function () {
 
     _createClass(charsEditActions, null, [{
         key: 'addCharPos',
-        value: function addCharPos(nameChar, countChar, beiChar) {
+        value: function addCharPos(countChar, beiChar, idChar) {
             //Ввод Имя характеристики
             //Ввод Количества
             //Ввод БЕИ
             //Делаем объект из Имени характеристики Количества БЕИ
             var newChar = {
-                nameChar: nameChar,
+                idChar: idChar,
                 countChar: countChar,
                 beiChar: beiChar
             };
@@ -1516,6 +1539,12 @@ var _itemsEditConstants = __webpack_require__(/*! ../constans/itemsEditConstants
 
 var ItemsEditConstants = _interopRequireWildcard(_itemsEditConstants);
 
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1528,20 +1557,25 @@ var ItemsEditActions = function () {
     _createClass(ItemsEditActions, null, [{
         key: 'addItem',
         value: function addItem(charsList, nameItemInput, beiItemInput) {
-            //Принимаем Список характеристик, наименование итема, БЕИ итема
-            //Делаем объект из Наименования, Беи и Массив характеристик
+            var compItem = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+            //Если создается новый итем, не компонентный, приравняем компоненты к нуля
+            //Принимаем Список характеристик, наименование итема, БЕИ итема и компонентов
+            //Делаем объект 
             var item = {
                 nameItem: nameItemInput,
                 beiItem: beiItemInput,
-                charsItem: charsList
+                charsItem: charsList,
+                compItem: compItem
             };
-            //Делаем объект экшн из Тип экшна: константа, Пэйлоад: итем
-            var action = {
+            //С помощью Аксиоса постим характеристики. Сервер должен вернуть объект с созданными характеристиками
+            var backData = _axios2.default.post('http://localhost/items', item);
+            //Пихаем все в объект
+            var result = {
                 type: ItemsEditConstants.ADD_ITEM,
-                payload: item
-            };
-            //Возвращаем экшн
-            return action;
+                payload: backData
+                //Возвращаем экшн
+            };return result;
         }
     }]);
 
@@ -1702,6 +1736,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var ADD_ITEM = exports.ADD_ITEM = 'ADD_ITEM';
+var ADD_ITEM_PENDING = exports.ADD_ITEM_PENDING = 'ADD_ITEM_PENDING';
+var ADD_ITEM_FULFILLED = exports.ADD_ITEM_FULFILLED = 'ADD_ITEM_FULFILLED';
+var ADD_ITEMREJECTED = exports.ADD_ITEMREJECTED = 'ADD_ITEM_REJECTED';
 
 /***/ }),
 
@@ -1741,17 +1778,22 @@ function beiEditReducers() {
                 var magnitude = [];
                 //Создаем пустой массив названий характеристик
                 var name = [];
+                //Создаем пустой массив id
+                var id = [];
                 //Создаем пустой массив обозначений и мапим туда данные, полученные с сервера
                 var designation = action.payload.data.map(function (value) {
                     //Пушим описания в массив описаний
                     magnitude.push(value.magnitude);
                     //Пушим названия характеристик в массив с названиями
                     name.push(value.name);
+                    //пушим id в массив с айди
+                    id.push(value.id);
                     //Возвращаем обозначения для пушинга в массив обозначений
                     return value.designation;
                 });
                 //Создаем объект и в объекте указываем ссылки на полученные массивы
                 var newRes = {
+                    id: id,
                     magnitude: magnitude,
                     name: name,
                     designation: designation
@@ -1764,14 +1806,14 @@ function beiEditReducers() {
             {
                 //забираем Базовые характеристики со стейта
                 var newBei = state.bei;
-                //Пушим название "Длина"
-                console.log(newBei.magnitude);
-                console.log(action.payload.data.magnitude);
+                //Пушим название новой характеристики
                 newBei.magnitude.push(action.payload.data.magnitude);
-                //Пушим стандартное обозначение "Метр", его нет.
+                //Пушим стандартное название. Приравниваем его к обычному названию
                 newBei.name.push(action.payload.data.magnitude);
                 //Пушим единицу измерения
                 newBei.designation.push(action.payload.data.designation);
+                //Пушим айди
+                newBei.id.push(action.payload.data.id);
                 //Обновляем стейт
                 state = _extends({}, state, { bei: newBei });
             }
@@ -1968,11 +2010,11 @@ function itemsEditReducer() {
 
     switch (action.type) {
         //отлавливаем Экшн по типу
-        case ItemsEditConstants.ADD_ITEM:
+        case ItemsEditConstants.ADD_ITEM_FULFILLED:
             {
                 //Пушим в стэйт новый итем
                 var items = state.items;
-                items.push(action.payload);
+                items.push(action.payload.data);
                 state = _extends({}, state, { items: items });
                 break;
             }

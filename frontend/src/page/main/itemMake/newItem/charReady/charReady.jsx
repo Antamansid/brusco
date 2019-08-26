@@ -8,13 +8,12 @@ class CharReady extends React.Component {
         super(props);
     }
     render() {
-        console.log(this.props);
         if(!this.props.chars.chars.length){
             return <div><p>Добавьте характеристику</p></div>
         };
         let chars = this.props.chars.chars.map((data, index)=>{
              return <div key = {index}>
-                <span>{data.nameChar}</span><span>: </span>
+                <span>{this.props.bei.bei.magnitude[this.props.bei.bei.id.indexOf(data.idChar)]}</span><span>: </span>
                 <span>{data.countChar}</span>
                 <span>{data.beiChar}</span>
             </div>
@@ -27,7 +26,8 @@ class CharReady extends React.Component {
 
 function mapStateToProps(store) {
     return {
-        chars: store.chars
+        chars: store.chars,
+        bei: store.bei
     }
 }
 export default connect (mapStateToProps)(CharReady);

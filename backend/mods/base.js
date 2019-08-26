@@ -51,6 +51,20 @@ class DB {
                 })
             })
         })
+    }
+    insertItems(nameItem, beiItem, charsItem, compItem){
+        let chars = JSON.stringify(charsItem);
+        let comp = JSON.stringify(compItem);
+        return new Promise((resolve, reject)=>{
+            this.pool.getConnection((err, connection)=>{
+                if(err) throw err;
+                connection.query(`INSERT INTO items (name, bei, chars, components) VALUES ('${nameItem}', '${beiItem}', '${chars}', '${comp}')`, (error, results, fields)=>{
+                    connection.release();
+                    if(error) throw error;
+                    resolve(results);
+                })
+            })
+        })
     }/*
     update(data){
         return new Promise((resolve, reject)=>{

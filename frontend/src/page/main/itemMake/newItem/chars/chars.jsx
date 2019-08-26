@@ -18,22 +18,41 @@ class Chars extends React.Component {
         super(props);
     }
     addChar(){
-        //Проверяем новая ли характеристика
-        //Если новая - добавляем в базу
-        //Если не новая - ничего не делаем
-        //indexOf возвращает число от 0 и более для значения из массива, и -1 если его (значения) нет
-        if(this.props.bei.bei.magnitude.indexOf(this.nameCharInput.value)<0){
-            //диспатчим добавление характеристики в базу
-            this.props.dispatch(beiEditActions.makeNewBei(this.nameCharInput.value, this.charsConsoles.value))
+        if(this.nameCharInput.value !== "" && this.countCharInput.value !== ""){
+            //Так как летит промис, исполнение кода пойдет дальше и поля формы очистятся, поэтому пихаем все в переменные
+            let nameChar = this.nameCharInput.value;
+            let countChar = this.countCharInput.value;
+            let charsConsoles = this.charsConsoles.value;
+            let idChar = -1;
+            //Получаем порядковый номер из массива характеристик
+            let idCharInMassiv = this.props.bei.bei.magnitude.indexOf(nameChar);
+            //Проверяем новая ли характеристика
+            //Если новая - добавляем в базу
+            //Если не новая - ничего не делаем
+            //indexOf возвращает число от 0 и более для значения из массива, и -1 если его (значения) нет
+            if(idCharInMassiv < 0){
+                //диспатчим добавление характеристики в базу
+                this.props.dispatch(beiEditActions.makeNewBei(nameChar, charsConsoles)).then(()=>{
+                    //Получаем порядковый номер из массива характеристик
+                    idCharInMassiv = this.props.bei.bei.magnitude.indexOf(nameChar);
+                    //Получаем айди характеристики
+                    idChar = this.props.bei.bei.id[idCharInMassiv];
+                    //диспатчим добавление характеристики
+                    this.props.dispatch(charsEditActions.addCharPos(countChar, charsConsoles, idChar));
+                })
+            } else {
+                //Получаем айди характеристики
+                idChar = this.props.bei.bei.id[idCharInMassiv];
+                //Если айди есть - просто диспатчим характеристику
+                this.props.dispatch(charsEditActions.addCharPos(countChar, charsConsoles, idChar));
+            }
+            //Очистить поле имени Характеристики
+            this.nameCharInput.value = "";
+            //Очистить поле количества Характеристики
+            this.countCharInput.value = "";
+            //Очистить поле БЕИ  характеристики
+            this.charsConsoles.value = "";
         }
-        //Диспатчим Экшн "Добавить характеристику"
-        this.props.dispatch(charsEditActions.addCharPos(this.nameCharInput.value, this.countCharInput.value, this.charsConsoles.value));
-        //Очистить поле имени Характеристики
-        this.nameCharInput.value = "";
-        //Очистить поле количества Характеристики
-        this.countCharInput.value = "";
-        //Очистить поле БЕИ  характеристики
-        this.charsConsoles.value = "";
 
     }
     fillUp(){
