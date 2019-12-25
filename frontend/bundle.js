@@ -281,16 +281,6 @@ var CompItem = function (_React$Component) {
     }
 
     _createClass(CompItem, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            (0, _jquery2.default)("#compItem").droppable({
-                accept: "div",
-                drop: function drop(event, ui) {
-                    ui.draggable.appendTo("#ItemMaker");
-                }
-            });
-        }
-    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -381,18 +371,6 @@ var FindItem = function (_React$Component) {
     }
 
     _createClass(FindItem, [{
-        key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-            this.itemsList.map(function (elem, index) {
-                (0, _jquery2.default)(elem).draggable({
-                    revert: "invalid",
-                    containment: "document",
-                    helper: "clone",
-                    cursor: "move"
-                });
-            });
-        }
-    }, {
         key: "render",
         value: function render() {
             var _this2 = this;

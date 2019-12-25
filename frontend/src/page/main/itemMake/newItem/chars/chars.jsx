@@ -16,6 +16,12 @@ import {connect} from "react-redux";
 class Chars extends React.Component {
     constructor(props){
         super(props);
+        $(this.nameCharInput).autocomplete({
+            minLength: 2,
+            source: (request, response)=>{
+                this.props.dispatch(beiEditActions.getBei(request.term)).then();
+            }
+        });
     }
     addChar(){
         if(this.nameCharInput.value !== "" && this.countCharInput.value !== ""){

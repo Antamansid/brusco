@@ -11,16 +11,6 @@ class FindItem extends React.Component {
         super(props);
         this.itemsList = [];
     }
-    componentDidUpdate(){
-        this.itemsList.map((elem, index)=>{
-            $(elem).draggable({
-                revert: "invalid",
-                containment: "document",
-                helper: "clone",
-                cursor: "move"
-            });
-        })
-    }
     render() {
         let items = ""
         if(this.props.items.items.length){

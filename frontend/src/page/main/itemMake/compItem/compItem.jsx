@@ -3,14 +3,6 @@ import $ from "jquery";
 import "jquery-ui/ui/widgets/droppable";
 
 export default class CompItem extends React.Component {
-    componentDidMount(){
-        $("#compItem").droppable({
-            accept: "div",
-            drop: function( event, ui ) {
-                ui.draggable.appendTo("#ItemMaker");
-            }
-        });
-    }
     render() {
         return <div>
                 <div id="compItem" className="ui-widget-content ui-state-default">
