@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: node try.js ${{GITHUB_REF}}
+    - run: node try.js ${{github.ref}}
     #- run: npm run build --if-present
     #- run: npm test
       env:
